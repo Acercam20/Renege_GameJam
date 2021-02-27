@@ -12,6 +12,8 @@ TagManager:
   - Checkpoint
   - FinishObjective
   - DeathPlane
+  - EndText
+  - VictoryCheck
   layers:
   - Default
   - TransparentFX

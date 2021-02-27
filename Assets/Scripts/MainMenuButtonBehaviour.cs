@@ -20,6 +20,7 @@ public class MainMenuButtonBehaviour : MonoBehaviour
     public void OnStartGameButtonPressed()
     {
         SceneManager.LoadScene("GameplayLevel");
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void OnOptionsButtonPressed()

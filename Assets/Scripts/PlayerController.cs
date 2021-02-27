@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviour
     {
         //playerAnimator = GetComponent<Animator>();
         RB = GetComponent<Rigidbody>();
-
+        //gameManager.currentRespawnPoint = gameManager.startObject;
         inputAction = asset.FindAction("SwitchCircle");
         gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
         buttonControl = (ButtonControl)inputAction.controls[0];
@@ -165,7 +165,9 @@ public class PlayerController : MonoBehaviour
         }
         else if (other.gameObject.tag == "FinishObjective")
         {
-            //GGs!
+            Lives = 5;
+            GameObject.FindWithTag("VictoryCheck").GetComponent<VictoryCheck>().Victory = true;
+            gameManager.EndGame();
         }
         else if (other.gameObject.tag == "DeathPlane")
         {
@@ -178,7 +180,9 @@ public class PlayerController : MonoBehaviour
         Lives -= r;
         if (Lives == 0)
         {
-            //Game Over.
+            Lives = 5;
+            GameObject.FindWithTag("VictoryCheck").GetComponent<VictoryCheck>().Victory = false;
+            gameManager.EndGame();
         }
         transform.position = gameManager.currentRespawnPoint.transform.position;
     }

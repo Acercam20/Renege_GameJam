@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public enum WorldColour { White, Red, Green, Blue};
@@ -19,14 +20,16 @@ public class GameManager : MonoBehaviour
     public GameObject finishObject;
     public List<GameObject> checkpoints;
     public GameObject currentRespawnPoint;
+    public bool Victory;
     void Start()
     {
         currentRespawnPoint = startObject;
         Cursor.lockState = CursorLockMode.Locked;
         PauseGame(false);
-        DontDestroyOnLoad(pauseCanvas);
-        DontDestroyOnLoad(this);
+        //DontDestroyOnLoad(pauseCanvas);
+        //DontDestroyOnLoad(this);
         SwitchCircle.SetActive(false);
+        GameObject.FindWithTag("Player").GetComponent<PlayerController>().Lives = 5;
 
     }
 
@@ -100,30 +103,6 @@ public class GameManager : MonoBehaviour
                 GameObject.FindGameObjectsWithTag("ColourLight")[i].GetComponent<Light>().color = Color.blue;
             }
         }
-        else
-        {
-
-        }
-    }
-
-    public void SetToDay()
-    {
-
-    }
-
-    public void SetToNight()
-    {
-
-    }
-
-    public void DayTransition()
-    {
-
-    }
-
-    public void NightTransition()
-    {
-
     }
 
     public void ToggleSwitchCircle(bool switchCircleToggle)
@@ -140,5 +119,11 @@ public class GameManager : MonoBehaviour
             GameObject.FindWithTag("Player").GetComponent<PlayerController>().cameraLock = true;
             Cursor.lockState = CursorLockMode.None;
         }
+    }
+
+    public void EndGame()
+    {
+        SceneManager.LoadScene("GameEnd");
+        Cursor.lockState = CursorLockMode.None;
     }
 }
