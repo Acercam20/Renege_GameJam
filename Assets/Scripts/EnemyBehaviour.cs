@@ -8,6 +8,7 @@ public class EnemyBehaviour : MonoBehaviour
     public bool passiveBool;
     public float movementSpeed;
     public float losDistance;
+    public int damageValue = 1;
     private bool inPursuit;
     private bool retreating;
 
@@ -68,5 +69,15 @@ public class EnemyBehaviour : MonoBehaviour
                 gameObject.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
             }
         }    
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            collision.gameObject.GetComponent<PlayerController>().TakeDamage(damageValue);
+            inPursuit = false;
+            retreating = true;
+        }
     }
 }

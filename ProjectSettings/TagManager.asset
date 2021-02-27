@@ -8,6 +8,10 @@ TagManager:
   - Ground
   - ColourLight
   - ColourEnemy
+  - StartObjective
+  - Checkpoint
+  - FinishObjective
+  - DeathPlane
   layers:
   - Default
   - TransparentFX

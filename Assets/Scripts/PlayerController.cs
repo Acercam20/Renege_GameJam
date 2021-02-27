@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     GameManager gameManager;
     int actionCheck;
 
+    public int Lives;
     public InputActionAsset asset;
     //public GameObject followTransform;
     private InputAction inputAction;
@@ -153,5 +154,32 @@ public class PlayerController : MonoBehaviour
     public void ActivateSwitchCircle()
     {
         Debug.Log("ActivatedSwitchCircle");
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Checkpoint")
+        {
+            gameManager.currentRespawnPoint = other.gameObject;
+            other.gameObject.GetComponent<MeshRenderer>().material.color = Color.yellow;
+        }
+        else if (other.gameObject.tag == "FinishObjective")
+        {
+            //GGs!
+        }
+        else if (other.gameObject.tag == "DeathPlane")
+        {
+            TakeDamage(1);
+        }
+    }
+
+    public void TakeDamage(int r = 1)
+    {
+        Lives -= r;
+        if (Lives == 0)
+        {
+            //Game Over.
+        }
+        transform.position = gameManager.currentRespawnPoint.transform.position;
     }
 }

@@ -15,9 +15,13 @@ public class GameManager : MonoBehaviour
     public float nightDuration;
     public GameObject HUDCanvas;
     public GameObject SwitchCircle;
-
+    public GameObject startObject;
+    public GameObject finishObject;
+    public List<GameObject> checkpoints;
+    public GameObject currentRespawnPoint;
     void Start()
     {
+        currentRespawnPoint = startObject;
         Cursor.lockState = CursorLockMode.Locked;
         PauseGame(false);
         DontDestroyOnLoad(pauseCanvas);
