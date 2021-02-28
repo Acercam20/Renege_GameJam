@@ -8,8 +8,17 @@ public class VictoryText : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (GameObject.FindWithTag("VictoryCheck").GetComponent<VictoryCheck>().Victory)
-            gameObject.GetComponent<Text>().text = "Victory!";
+        if (GameObject.FindWithTag("VictoryCheck") != null)
+        {
+            if (GameObject.FindWithTag("VictoryCheck").GetComponent<VictoryCheck>().Victory)
+            {
+                gameObject.GetComponent<Text>().text = "Victory!";
+            }
+            else
+            {
+                gameObject.GetComponent<Text>().text = "Defeat";
+            }
+        }
         else
             gameObject.GetComponent<Text>().text = "Defeat";
     }

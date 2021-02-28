@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     public List<GameObject> checkpoints;
     public GameObject currentRespawnPoint;
     public bool Victory;
+    public SkinnedMeshRenderer skinnedMeshRenderer;
     void Start()
     {
         currentRespawnPoint = startObject;
@@ -70,7 +71,7 @@ public class GameManager : MonoBehaviour
         if (currentColour != newColour && newColour == WorldColour.White)
         {
             currentColour = WorldColour.White;
-            GameObject.FindWithTag("Player").GetComponent<MeshRenderer>().material.color = Color.white;
+            skinnedMeshRenderer.material.color = Color.white;
             for (int i = 0; i < numberOfLights; i++)
             {
                 GameObject.FindGameObjectsWithTag("ColourLight")[i].GetComponent<Light>().color = Color.white;
@@ -79,7 +80,7 @@ public class GameManager : MonoBehaviour
         else if (currentColour != newColour && newColour == WorldColour.Red)
         {
             currentColour = WorldColour.Red;
-            GameObject.FindWithTag("Player").GetComponent<MeshRenderer>().material.color = Color.red;
+            skinnedMeshRenderer.material.color = Color.red;
             for (int i = 0; i < numberOfLights; i++)
             {
                 GameObject.FindGameObjectsWithTag("ColourLight")[i].GetComponent<Light>().color = Color.red;
@@ -88,7 +89,7 @@ public class GameManager : MonoBehaviour
         else if (currentColour != newColour && newColour == WorldColour.Green)
         {
             currentColour = WorldColour.Green;
-            GameObject.FindWithTag("Player").GetComponent<MeshRenderer>().material.color = Color.green;
+            skinnedMeshRenderer.material.color = Color.green;
             for (int i = 0; i < numberOfLights; i++)
             {
                 GameObject.FindGameObjectsWithTag("ColourLight")[i].GetComponent<Light>().color = Color.green;
@@ -97,7 +98,7 @@ public class GameManager : MonoBehaviour
         else if (currentColour != newColour && newColour == WorldColour.Blue)
         {
             currentColour = WorldColour.Blue;
-            GameObject.FindWithTag("Player").GetComponent<MeshRenderer>().material.color = Color.blue;
+            skinnedMeshRenderer.material.color = Color.blue;
             for (int i = 0; i < numberOfLights; i++)
             {
                 GameObject.FindGameObjectsWithTag("ColourLight")[i].GetComponent<Light>().color = Color.blue;

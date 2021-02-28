@@ -11,28 +11,31 @@ public class EnemyBehaviour : MonoBehaviour
     public int damageValue = 1;
     private bool inPursuit;
     private bool retreating;
+    Animator animator;
+    public SkinnedMeshRenderer skinnedMeshRenderer;
 
     private Vector3 startPursuitLocation;
     private Vector3 endPursuitLocation;
     void Start()
     {
+        animator = gameObject.GetComponent<Animator>();
         startPursuitLocation = transform.position;
 
         if (team == GameManager.WorldColour.White)
         {
-            gameObject.GetComponent<MeshRenderer>().material.color = Color.white;
+            skinnedMeshRenderer.material.color = Color.white;
         }
         else if (team == GameManager.WorldColour.Red)
         {
-            gameObject.GetComponent<MeshRenderer>().material.color = Color.red;
+            skinnedMeshRenderer.material.color = Color.red;
         }
         else if (team == GameManager.WorldColour.Green)
         {
-            gameObject.GetComponent<MeshRenderer>().material.color = Color.green;
+            skinnedMeshRenderer.material.color = Color.green;
         }
         else if (team == GameManager.WorldColour.Blue)
         {
-            gameObject.GetComponent<MeshRenderer>().material.color = Color.blue;
+            skinnedMeshRenderer.material.color = Color.blue;
         }
     }
 
@@ -43,13 +46,24 @@ public class EnemyBehaviour : MonoBehaviour
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), losDistance, layerMask) && !retreating)
         {
             //Debug.Log("Did Hit");
-            inPursuit = true;
-            endPursuitLocation = GameObject.FindWithTag("Player").transform.position;
+            if (team != GameObject.FindWithTag("GameManager").GetComponent<GameManager>().currentColour)
+            {
+                inPursuit = true;
+                endPursuitLocation = GameObject.FindWithTag("Player").transform.position;
+            }
         }
     }
 
     void Update()
     {
+        if (inPursuit || retreating)
+        {
+            animator.SetBool("isRunning", true);
+        }
+        else
+        {
+            animator.SetBool("isRunning", false);
+        }
         PlayerDetection();
         if (inPursuit && team != GameObject.FindWithTag("GameManager").GetComponent<GameManager>().currentColour)
         {

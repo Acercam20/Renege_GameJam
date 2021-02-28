@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     private InputAction inputAction;
     ButtonControl buttonControl;
     public float cameraRotationSpeed;
+    public bool godMode;
 
     // Movement Components
     [SerializeField] private float WalkSpeed;
@@ -51,7 +52,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //playerAnimator = GetComponent<Animator>();
+        playerAnimator = GetComponent<Animator>();
         RB = GetComponent<Rigidbody>();
         //gameManager.currentRespawnPoint = gameManager.startObject;
         inputAction = asset.FindAction("SwitchCircle");
@@ -83,12 +84,28 @@ public class PlayerController : MonoBehaviour
         //movementDirection = new Vector3(InputVector.x, 0, InputVector.y) * (currentSpeed * Time.deltaTime);
         movementDirection = Quaternion.Euler(0, 1, 0) * MoveDirection * (currentSpeed * Time.deltaTime);
         transform.position += movementDirection;
+
+        if (InputVector.y == 0 && InputVector.x == 0)
+        {
+            playerAnimator.SetBool("isWalking", false);
+            playerAnimator.SetBool("isRunning", false);
+        }
+        else if (!IsRunning)
+        {
+            playerAnimator.SetBool("isWalking", true);
+        }
+        else
+        {
+            playerAnimator.SetBool("isRunning", true);
+            playerAnimator.SetBool("isWalking", false);
+        }
     }
 
     public void OnMovement(InputAction.CallbackContext context)
     {
         InputVector = context.action.ReadValue<Vector2>();
-
+        //if (!IsRunning)
+            //playerAnimator.SetBool("isWalking", true);
         //playerAnimator.SetFloat(MovementXHash, InputVector.x);
         //playerAnimator.SetFloat(MovementZHash, InputVector.y);
     }
@@ -97,13 +114,15 @@ public class PlayerController : MonoBehaviour
     {
         if (IsRunning)
         {
+            playerAnimator.SetBool("isRunning", false);
             IsRunning = false;
         }
         else
         {
+            playerAnimator.SetBool("isRunning", true);
             IsRunning = true;
         }
-        //playerAnimator.SetBool(IsRunningHash, button.isPressed);
+        //playerAnimator.SetBool(IsRunningHash, isPressed);
     }
 
     public void OnJump(InputAction.CallbackContext context)
@@ -166,7 +185,8 @@ public class PlayerController : MonoBehaviour
         else if (other.gameObject.tag == "FinishObjective")
         {
             Lives = 5;
-            GameObject.FindWithTag("VictoryCheck").GetComponent<VictoryCheck>().Victory = true;
+            if (GameObject.FindWithTag("VictoryCheck") != null)
+                GameObject.FindWithTag("VictoryCheck").GetComponent<VictoryCheck>().Victory = true;
             gameManager.EndGame();
         }
         else if (other.gameObject.tag == "DeathPlane")
@@ -177,13 +197,17 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(int r = 1)
     {
-        Lives -= r;
-        if (Lives == 0)
+        if (!godMode)
         {
-            Lives = 5;
-            GameObject.FindWithTag("VictoryCheck").GetComponent<VictoryCheck>().Victory = false;
-            gameManager.EndGame();
-        }
-        transform.position = gameManager.currentRespawnPoint.transform.position;
+            Lives -= r;
+            if (Lives == 0)
+            {
+                Lives = 5;
+                if (GameObject.FindWithTag("VictoryCheck") != null)
+                    GameObject.FindWithTag("VictoryCheck").GetComponent<VictoryCheck>().Victory = false;
+                gameManager.EndGame();
+            }
+            transform.position = gameManager.currentRespawnPoint.transform.position;
+        } 
     }
 }
