@@ -20,7 +20,19 @@ public class EnemyBehaviour : MonoBehaviour
     {
         animator = gameObject.GetComponent<Animator>();
         startPursuitLocation = transform.position;
-
+        int randomizedTeamNum = Random.Range(1, 4);
+        if (randomizedTeamNum == 1)
+        {
+            team = GameManager.WorldColour.Red;
+        }
+        else if (randomizedTeamNum == 2)
+        {
+            team = GameManager.WorldColour.Green;
+        }
+        else
+        {
+            team = GameManager.WorldColour.Blue;
+        }
         if (team == GameManager.WorldColour.White)
         {
             skinnedMeshRenderer.material.color = Color.white;
@@ -56,33 +68,36 @@ public class EnemyBehaviour : MonoBehaviour
 
     void Update()
     {
-        if (inPursuit || retreating)
+        if (!GameObject.FindWithTag("GameManager").GetComponent<GameManager>().IsPaused())
         {
-            animator.SetBool("isRunning", true);
-        }
-        else
-        {
-            animator.SetBool("isRunning", false);
-        }
-        PlayerDetection();
-        if (inPursuit && team != GameObject.FindWithTag("GameManager").GetComponent<GameManager>().currentColour)
-        {
-            transform.position = Vector3.MoveTowards(transform.position, endPursuitLocation, movementSpeed);
-            if (transform.position == endPursuitLocation)
+            if (inPursuit || retreating)
             {
-                inPursuit = false;
-                retreating = true;
+                animator.SetBool("isRunning", true);
+            }
+            else
+            {
+                animator.SetBool("isRunning", false);
+            }
+            PlayerDetection();
+            if (inPursuit && team != GameObject.FindWithTag("GameManager").GetComponent<GameManager>().currentColour)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, endPursuitLocation, movementSpeed);
+                if (transform.position == endPursuitLocation)
+                {
+                    inPursuit = false;
+                    retreating = true;
+                }
+            }
+            else if (retreating)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, startPursuitLocation, movementSpeed);
+                if (transform.position.x == startPursuitLocation.x && transform.position.y == startPursuitLocation.y)
+                {
+                    retreating = false;
+                    gameObject.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
+                }
             }
         }
-        else if (retreating)
-        {
-            transform.position = Vector3.MoveTowards(transform.position, startPursuitLocation, movementSpeed);
-            if (transform.position.x == startPursuitLocation.x && transform.position.y == startPursuitLocation.y)
-            {
-                retreating = false;
-                gameObject.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
-            }
-        }    
     }
 
     private void OnCollisionEnter(Collision collision)

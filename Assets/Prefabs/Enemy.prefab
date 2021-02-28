@@ -87,7 +87,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   team: 0
   passiveBool: 0
-  movementSpeed: 0.2
+  movementSpeed: 0.3
   losDistance: 100
   damageValue: 1
   skinnedMeshRenderer: {fileID: 1846597504251210454}

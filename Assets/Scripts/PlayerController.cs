@@ -208,6 +208,7 @@ public class PlayerController : MonoBehaviour
                 gameManager.EndGame();
             }
             transform.position = gameManager.currentRespawnPoint.transform.position;
+            gameManager.SetLivesText(Lives);
         } 
     }
 }

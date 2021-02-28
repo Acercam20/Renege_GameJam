@@ -22,6 +22,10 @@ public class GameManager : MonoBehaviour
     public GameObject currentRespawnPoint;
     public bool Victory;
     public SkinnedMeshRenderer skinnedMeshRenderer;
+    public Text timerText;
+    float timer = 0.0f;
+    public Text livesText;
+    int seconds;
     void Start()
     {
         currentRespawnPoint = startObject;
@@ -36,7 +40,9 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        
+        timer += Time.deltaTime;
+        seconds = (int)(timer % 60);
+        timerText.text = "Timer: " + seconds.ToString();
     }
 
     public void PauseGame(bool _pause)
@@ -46,12 +52,16 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 0;
             isPaused = true;
             pauseCanvas.SetActive(isPaused);
+            Cursor.lockState = CursorLockMode.None;
+            GameObject.FindWithTag("Player").GetComponent<PlayerController>().cameraLock = true;
         }
         else
         {
             Time.timeScale = 1;
             isPaused = false;
             pauseCanvas.SetActive(isPaused);
+            Cursor.lockState = CursorLockMode.Locked;
+            GameObject.FindWithTag("Player").GetComponent<PlayerController>().cameraLock = false;
         }
     }
 
@@ -122,8 +132,16 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void SetLivesText(int i)
+    {
+        livesText.text = "Lives: " + i.ToString();
+    }
     public void EndGame()
     {
+        if (GameObject.FindWithTag("VictoryCheck") != null)
+        {
+            GameObject.FindWithTag("VictoryCheck").GetComponent<VictoryCheck>().Score = 1000 - seconds;
+        }
         SceneManager.LoadScene("GameEnd");
         Cursor.lockState = CursorLockMode.None;
     }
