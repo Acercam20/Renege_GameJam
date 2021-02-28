@@ -9,8 +9,8 @@ public class EnemyBehaviour : MonoBehaviour
     public float movementSpeed;
     public float losDistance;
     public int damageValue = 1;
-    private bool inPursuit;
-    private bool retreating;
+    public bool inPursuit;
+    public bool retreating;
     Animator animator;
     public SkinnedMeshRenderer skinnedMeshRenderer;
 
@@ -70,11 +70,12 @@ public class EnemyBehaviour : MonoBehaviour
     {
         if (!GameObject.FindWithTag("GameManager").GetComponent<GameManager>().IsPaused())
         {
+            animator.SetBool("isRunning", true);
             if (inPursuit || retreating)
             {
                 animator.SetBool("isRunning", true);
             }
-            else
+            else if (!inPursuit && !retreating)
             {
                 animator.SetBool("isRunning", false);
             }

@@ -28,6 +28,11 @@ public class MainMenuButtonBehaviour : MonoBehaviour
         SceneManager.LoadScene("Options");
     }
 
+    public void OnHTPButtonPressed()
+    {
+        SceneManager.LoadScene("HowToPlay");
+    }
+
     public void OnExitGameButtonPressed()
     {
         Application.Quit();
