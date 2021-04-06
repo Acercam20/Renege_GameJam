@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public enum WorldColour { White, Red, Green, Blue};
-
+    public bool ToJ;
     public WorldColour currentColour;
     public GameObject pauseCanvas;
     private bool isPaused = false;
@@ -26,14 +26,15 @@ public class GameManager : MonoBehaviour
     float timer = 0.0f;
     public Text livesText;
     int seconds;
+    public Material holoCube;
+    public Material realCube;
+
+    public float worldTime = 1.0f;
     void Start()
     {
         currentRespawnPoint = startObject;
         Cursor.lockState = CursorLockMode.Locked;
         PauseGame(false);
-        //DontDestroyOnLoad(pauseCanvas);
-        //DontDestroyOnLoad(this);
-        SwitchCircle.SetActive(false);
         GameObject.FindWithTag("Player").GetComponent<PlayerController>().Lives = 5;
 
     }
@@ -118,18 +119,29 @@ public class GameManager : MonoBehaviour
 
     public void ToggleSwitchCircle(bool switchCircleToggle)
     {
-        if (switchCircleToggle)
+        if (ToJ)
         {
-            SwitchCircle.SetActive(false);
-            GameObject.FindWithTag("Player").GetComponent<PlayerController>().cameraLock = false;
-            Cursor.lockState = CursorLockMode.Locked;
+            if (worldTime > 0.5f)
+                worldTime = 0.02f;
+            else if (worldTime < 0.5f)
+                worldTime = 1;
         }
         else
         {
-            SwitchCircle.SetActive(true);
-            GameObject.FindWithTag("Player").GetComponent<PlayerController>().cameraLock = true;
-            Cursor.lockState = CursorLockMode.None;
+            if (switchCircleToggle)
+            {
+                SwitchCircle.SetActive(false);
+                GameObject.FindWithTag("Player").GetComponent<PlayerController>().cameraLock = false;
+                Cursor.lockState = CursorLockMode.Locked;
+            }
+            else
+            {
+                SwitchCircle.SetActive(true);
+                GameObject.FindWithTag("Player").GetComponent<PlayerController>().cameraLock = true;
+                Cursor.lockState = CursorLockMode.None;
+            }
         }
+        
     }
 
     public void SetLivesText(int i)

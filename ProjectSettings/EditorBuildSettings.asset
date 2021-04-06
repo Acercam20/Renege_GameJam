@@ -23,5 +23,17 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameEnd.unity
     guid: 301e02758ea1f964dab24fa6b82e5a6e
+  - enabled: 1
+    path: Assets/Scenes/ToJ Main Menu.unity
+    guid: 09a2feb3635b0be4e94d588eca4fcd4b
+  - enabled: 1
+    path: Assets/Scenes/ToJ Level1.unity
+    guid: 744e9f2a0875a4441b1fa5889e07b507
+  - enabled: 1
+    path: Assets/Scenes/ToJ Level2.unity
+    guid: 8a1d70eb347d03143a75ce8dd9472e5c
+  - enabled: 1
+    path: Assets/Scenes/ToJ Level3.unity
+    guid: 3570a1c76e9523b4abc5ed77cb091c4a
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 608f1c1a9cf0cda40966f0e46ecbb972, type: 2}

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
-
+using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
     GameManager gameManager;
@@ -12,11 +12,13 @@ public class PlayerController : MonoBehaviour
     public int Lives;
     public InputActionAsset asset;
     //public GameObject followTransform;
-    private InputAction inputAction;
-    ButtonControl buttonControl;
+    private InputAction inputAction1;
+    private InputAction inputAction2;
+    ButtonControl timeStop;
+    ButtonControl risingPlatform;
     public float cameraRotationSpeed;
     public bool godMode;
-
+    public GameObject holoPlatform;
     // Movement Components
     [SerializeField] private float WalkSpeed;
     [SerializeField] private float RunSpeed;
@@ -48,32 +50,59 @@ public class PlayerController : MonoBehaviour
     public float lookXLimit = 45.0f;
 
     Vector3 movementDirection;
-
+    private bool holoActive = false;
     // Start is called before the first frame update
     void Start()
     {
         playerAnimator = GetComponent<Animator>();
         RB = GetComponent<Rigidbody>();
         //gameManager.currentRespawnPoint = gameManager.startObject;
-        inputAction = asset.FindAction("SwitchCircle");
+        inputAction1 = asset.FindAction("SwitchCircle");
+        inputAction2 = asset.FindAction("RisingPlatform");
         gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
-        buttonControl = (ButtonControl)inputAction.controls[0];
-        inputAction.Enable();
+        timeStop = (ButtonControl)inputAction1.controls[0];
+        risingPlatform = (ButtonControl)inputAction2.controls[0];
+        inputAction1.Enable();
+        inputAction2.Enable();
     }
-
     // Update is called once per frame
     void Update()
     {
-        if (buttonControl.wasPressedThisFrame)
+        if (timeStop.wasPressedThisFrame)
         {
             gameManager.ToggleSwitchCircle(false);
         }
-        else if (buttonControl.wasReleasedThisFrame)
+        if (risingPlatform.wasPressedThisFrame)
         {
-            gameManager.ToggleSwitchCircle(true);
+            holoPlatform.GetComponent<MeshRenderer>().material = gameManager.holoCube;
+            holoPlatform.transform.position = transform.position + transform.forward * 5;
+            holoActive = true;
         }
+        if (risingPlatform.wasReleasedThisFrame)
+        {
+            holoActive = false;
+            //holoPlatform.transform.position = new Vector3(0, -10, 0);
+            holoPlatform.GetComponent<MeshRenderer>().material = gameManager.realCube;
+        }
+        if (holoActive)
+        {
+            holoPlatform.transform.position = transform.position + transform.forward * 5;
+            holoPlatform.transform.rotation = transform.rotation;
+        }
+
+        /*
+        if (timeStop.wasPressedThisFrame)
+        {
+            if (GameObject.FindWithTag("GameManager") != null)
+                gameManager.ToggleSwitchCircle(false);
+        }
+        else if (timeStop.wasReleasedThisFrame)
+        {
+            if (GameObject.FindWithTag("GameManager") != null)
+                gameManager.ToggleSwitchCircle(true);
+        }*/
         //Movement Updates
-        if (IsJumping) return;
+        //if (IsJumping) return;
 
         if (!(InputVector.magnitude > 0)) MoveDirection = Vector3.zero;
 
@@ -192,6 +221,17 @@ public class PlayerController : MonoBehaviour
         else if (other.gameObject.tag == "DeathPlane")
         {
             TakeDamage(1);
+        }
+        else if (other.gameObject.tag == "NextObjective")
+        {
+            if (SceneManager.GetActiveScene().name == "ToJ Level1")
+            {
+                SceneManager.LoadScene("ToJ Level2");
+            }
+            else if (SceneManager.GetActiveScene().name == "ToJ Level2")
+            {
+                SceneManager.LoadScene("ToJ Level3");
+            }
         }
     }
 

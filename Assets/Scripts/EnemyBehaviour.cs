@@ -80,13 +80,16 @@ public class EnemyBehaviour : MonoBehaviour
                 animator.SetBool("isRunning", false);
             }
             PlayerDetection();
-            if (inPursuit && team != GameObject.FindWithTag("GameManager").GetComponent<GameManager>().currentColour)
+            if (GameObject.FindWithTag("GameManager") != null)
             {
-                transform.position = Vector3.MoveTowards(transform.position, endPursuitLocation, movementSpeed);
-                if (transform.position == endPursuitLocation)
+                if (inPursuit && team != GameObject.FindWithTag("GameManager").GetComponent<GameManager>().currentColour)
                 {
-                    inPursuit = false;
-                    retreating = true;
+                    transform.position = Vector3.MoveTowards(transform.position, endPursuitLocation, movementSpeed);
+                    if (transform.position == endPursuitLocation)
+                    {
+                        inPursuit = false;
+                        retreating = true;
+                    }
                 }
             }
             else if (retreating)
