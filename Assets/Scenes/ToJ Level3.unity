@@ -6144,9 +6144,9 @@ MonoBehaviour:
   rotateSpeedX: 0
   rotateSpeedY: 25
   rotateSpeedZ: 0
-  moveSpeed: 2
-  moveRangeX: 15
-  moveRangeY: 15
+  moveSpeed: 1
+  moveRangeX: 12
+  moveRangeY: 12
   moveRangeZ: 0
   isKillBox: 0
   activeOnTouch: 1
@@ -14943,7 +14943,7 @@ GameObject:
   - component: {fileID: 1635237263}
   m_Layer: 0
   m_Name: EndLocation
-  m_TagString: NextObjective
+  m_TagString: FinishObjective
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
