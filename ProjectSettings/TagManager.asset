@@ -15,6 +15,7 @@ TagManager:
   - EndText
   - VictoryCheck
   - NextObjective
+  - BGM
   layers:
   - Default
   - TransparentFX

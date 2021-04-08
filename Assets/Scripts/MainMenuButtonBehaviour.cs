@@ -45,7 +45,7 @@ public class MainMenuButtonBehaviour : MonoBehaviour
 
     public void OnBackButtonPressed()
     {
-        SceneManager.LoadScene("Main Menu");
+        SceneManager.LoadScene("ToJ Main Menu");
     }
 
     public void OnResumeButtonPressed()

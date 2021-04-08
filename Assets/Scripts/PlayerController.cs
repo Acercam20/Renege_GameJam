@@ -276,6 +276,8 @@ public class PlayerController : MonoBehaviour
             if (Lives == 0)
             {
                 Lives = 5;
+                Cursor.lockState = CursorLockMode.Confined;
+                Cursor.visible = true;
                 if (GameObject.FindWithTag("VictoryCheck") != null)
                     GameObject.FindWithTag("VictoryCheck").GetComponent<VictoryCheck>().Victory = false;
                 gameManager.EndGame();
