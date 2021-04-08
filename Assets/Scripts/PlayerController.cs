@@ -51,6 +51,13 @@ public class PlayerController : MonoBehaviour
 
     Vector3 movementDirection;
     private bool holoActive = false;
+
+    public bool timePowers;
+    [SerializeField]
+    private float timePowerLimit = 5;
+    private float tempTime;
+    private bool timeActive;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -70,19 +77,40 @@ public class PlayerController : MonoBehaviour
     {
         if (timeStop.wasPressedThisFrame)
         {
-            gameManager.ToggleSwitchCircle(false);
+            Debug.Log(tempTime);
+            if (timePowers && tempTime > timePowerLimit)
+            {
+                gameManager.ToggleSwitchCircle(timeActive);
+
+                if (timeActive)
+                    timeActive = false;
+                else
+                    timeActive = true;
+
+                tempTime = 0;
+            }
+            
         }
+
+        tempTime += Time.deltaTime;
+
         if (risingPlatform.wasPressedThisFrame)
         {
-            holoPlatform.GetComponent<MeshRenderer>().material = gameManager.holoCube;
-            holoPlatform.transform.position = transform.position + transform.forward * 5;
-            holoActive = true;
+            if (holoPlatform != null)
+            {
+                holoPlatform.GetComponent<MeshRenderer>().material = gameManager.holoCube;
+                holoPlatform.transform.position = transform.position + transform.forward * 5;
+                holoActive = true;
+            }
         }
         if (risingPlatform.wasReleasedThisFrame)
         {
-            holoActive = false;
-            //holoPlatform.transform.position = new Vector3(0, -10, 0);
-            holoPlatform.GetComponent<MeshRenderer>().material = gameManager.realCube;
+            if (holoPlatform != null)
+            {
+                holoActive = false;
+                //holoPlatform.transform.position = new Vector3(0, -10, 0);
+                holoPlatform.GetComponent<MeshRenderer>().material = gameManager.realCube;
+            }
         }
         if (holoActive)
         {
@@ -226,6 +254,7 @@ public class PlayerController : MonoBehaviour
         {
             if (SceneManager.GetActiveScene().name == "ToJ Level1")
             {
+                timePowers = true;
                 SceneManager.LoadScene("ToJ Level2");
             }
             else if (SceneManager.GetActiveScene().name == "ToJ Level2")

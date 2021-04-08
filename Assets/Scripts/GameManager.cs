@@ -33,10 +33,9 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         currentRespawnPoint = startObject;
-        Cursor.lockState = CursorLockMode.Locked;
         PauseGame(false);
         GameObject.FindWithTag("Player").GetComponent<PlayerController>().Lives = 5;
-
+        Invoke("CursorLocking", 1);
     }
 
     void Update()
@@ -64,6 +63,12 @@ public class GameManager : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
             GameObject.FindWithTag("Player").GetComponent<PlayerController>().cameraLock = false;
         }
+    }
+
+    public void CursorLocking()
+    {
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = true;
     }
 
     public bool IsPaused()
@@ -121,9 +126,9 @@ public class GameManager : MonoBehaviour
     {
         if (ToJ)
         {
-            if (worldTime > 0.5f)
+            if (switchCircleToggle)
                 worldTime = 0.02f;
-            else if (worldTime < 0.5f)
+            else
                 worldTime = 1;
         }
         else
