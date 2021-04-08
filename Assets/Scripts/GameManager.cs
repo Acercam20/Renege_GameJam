@@ -53,6 +53,7 @@ public class GameManager : MonoBehaviour
             isPaused = true;
             pauseCanvas.SetActive(isPaused);
             Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
             GameObject.FindWithTag("Player").GetComponent<PlayerController>().cameraLock = true;
         }
         else
@@ -61,6 +62,7 @@ public class GameManager : MonoBehaviour
             isPaused = false;
             pauseCanvas.SetActive(isPaused);
             Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
             GameObject.FindWithTag("Player").GetComponent<PlayerController>().cameraLock = false;
         }
     }

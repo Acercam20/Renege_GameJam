@@ -19,7 +19,7 @@ public class MainMenuButtonBehaviour : MonoBehaviour
 
     public void OnStartGameButtonPressed()
     {
-        SceneManager.LoadScene("GameplayLevel");
+        SceneManager.LoadScene("ToJ Level1");
         Cursor.lockState = CursorLockMode.Locked;
     }
 
