@@ -41,7 +41,8 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime;
-        seconds = (int)(timer % 60);
+        //seconds = (int)(timer % 60);
+        seconds = (int)Time.time;
         timerText.text = "Timer: " + seconds.ToString();
     }
 
