@@ -129,9 +129,17 @@ public class GameManager : MonoBehaviour
         if (ToJ)
         {
             if (switchCircleToggle)
+            {
+                GameObject.FindWithTag("SFX").GetComponent<AudioSource>().PlayOneShot(GameObject.FindWithTag("SFX").GetComponent<SFXManager>().timePower);
                 worldTime = 0.02f;
+            }
+                
             else
+            {
+                GameObject.FindWithTag("SFX").GetComponent<AudioSource>().PlayOneShot(GameObject.FindWithTag("SFX").GetComponent<SFXManager>().timeResume);
                 worldTime = 1;
+            }
+                
         }
         else
         {

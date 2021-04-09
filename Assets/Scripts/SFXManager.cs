@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SFXManager : MonoBehaviour
 {
-    public AudioClip buttonPress, warpWalls, checkpoints, pause, unpause, takeDamage, landing, footsteps;
+    public AudioClip buttonPress, warpWalls, checkpoints, pause, unpause, takeDamage, landing, timePower, holoCube, timeResume;
     void Start()
     {
         DontDestroyOnLoad(this);

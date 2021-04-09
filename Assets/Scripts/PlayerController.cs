@@ -58,6 +58,7 @@ public class PlayerController : MonoBehaviour
     private float tempTime;
     private bool timeActive;
 
+    //public AudioClip footsteps, running;
     // Start is called before the first frame update
     void Start()
     {
@@ -71,6 +72,8 @@ public class PlayerController : MonoBehaviour
         risingPlatform = (ButtonControl)inputAction2.controls[0];
         inputAction1.Enable();
         inputAction2.Enable();
+
+        
     }
     // Update is called once per frame
     void Update()
@@ -98,6 +101,7 @@ public class PlayerController : MonoBehaviour
         {
             if (holoPlatform != null)
             {
+
                 holoPlatform.GetComponent<MeshRenderer>().material = gameManager.holoCube;
                 holoPlatform.transform.position = transform.position + transform.forward * 5;
                 holoActive = true;
@@ -107,6 +111,7 @@ public class PlayerController : MonoBehaviour
         {
             if (holoPlatform != null)
             {
+                GameObject.FindWithTag("SFX").GetComponent<AudioSource>().PlayOneShot(GameObject.FindWithTag("SFX").GetComponent<SFXManager>().holoCube);
                 holoActive = false;
                 //holoPlatform.transform.position = new Vector3(0, -10, 0);
                 holoPlatform.GetComponent<MeshRenderer>().material = gameManager.realCube;
@@ -118,19 +123,6 @@ public class PlayerController : MonoBehaviour
             holoPlatform.transform.rotation = transform.rotation;
         }
 
-        /*
-        if (timeStop.wasPressedThisFrame)
-        {
-            if (GameObject.FindWithTag("GameManager") != null)
-                gameManager.ToggleSwitchCircle(false);
-        }
-        else if (timeStop.wasReleasedThisFrame)
-        {
-            if (GameObject.FindWithTag("GameManager") != null)
-                gameManager.ToggleSwitchCircle(true);
-        }*/
-        //Movement Updates
-        //if (IsJumping) return;
 
         if (!(InputVector.magnitude > 0)) MoveDirection = Vector3.zero;
 
@@ -195,10 +187,10 @@ public class PlayerController : MonoBehaviour
     {
         if (!other.gameObject.CompareTag("Ground") && !IsJumping)
         {
-            GameObject.FindWithTag("SFX").GetComponent<AudioSource>().PlayOneShot(GameObject.FindWithTag("SFX").GetComponent<SFXManager>().landing);
             return;
         }
-        
+
+        GameObject.FindWithTag("SFX").GetComponent<AudioSource>().PlayOneShot(GameObject.FindWithTag("SFX").GetComponent<SFXManager>().landing);
 
         IsJumping = false;
         //playerAnimator.SetBool(IsJumpingHash, false);

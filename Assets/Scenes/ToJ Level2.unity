@@ -270,6 +270,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb6e745f0888af246abd703431879c5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sfxGameObject: {fileID: 0}
 --- !u!114 &44382709
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1556,6 +1557,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb6e745f0888af246abd703431879c5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sfxGameObject: {fileID: 0}
 --- !u!114 &331343548
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6588,6 +6590,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb6e745f0888af246abd703431879c5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sfxGameObject: {fileID: 0}
 --- !u!114 &1268429793
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7446,7 +7449,7 @@ MonoBehaviour:
   playerCamera: {fileID: 385723583}
   lookSpeed: 0.02
   lookXLimit: 45
-  timePowers: 0
+  timePowers: 1
   timePowerLimit: 5
 --- !u!114 &1486286633
 MonoBehaviour:
@@ -7605,6 +7608,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 8d6ced5f-79ca-46af-b88c-5251710616ce
     m_ActionName: Player/Run[/Keyboard/shift]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0cc0d5cb-0072-4e18-ab6d-65822078a4af
+    m_ActionName: Player/RisingPlatform[/Keyboard/e]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
