@@ -8,6 +8,7 @@ public class TutorialButtons : MonoBehaviour
 
     public void Progress()
     {
+        GameObject.FindWithTag("SFX").GetComponent<AudioSource>().PlayOneShot(GameObject.FindWithTag("SFX").GetComponent<SFXManager>().buttonPress);
         if (tutorialCanvas.index != tutorialCanvas.tutorialPages.Count - 1)
             tutorialCanvas.CyclePages(true);
         else
@@ -16,6 +17,7 @@ public class TutorialButtons : MonoBehaviour
 
     public void Unprogress()
     {
+        GameObject.FindWithTag("SFX").GetComponent<AudioSource>().PlayOneShot(GameObject.FindWithTag("SFX").GetComponent<SFXManager>().buttonPress);
         tutorialCanvas.CyclePages(false);
     }
 

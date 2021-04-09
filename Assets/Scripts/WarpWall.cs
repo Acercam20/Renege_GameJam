@@ -22,6 +22,7 @@ public class WarpWall : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
+            GameObject.FindWithTag("SFX").GetComponent<AudioSource>().PlayOneShot(GameObject.FindWithTag("SFX").GetComponent<SFXManager>().warpWalls);
             collision.gameObject.transform.position = destination.position;
         }
     }

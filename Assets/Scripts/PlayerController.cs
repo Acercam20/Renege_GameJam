@@ -193,7 +193,12 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        if (!other.gameObject.CompareTag("Ground") && !IsJumping) return;
+        if (!other.gameObject.CompareTag("Ground") && !IsJumping)
+        {
+            GameObject.FindWithTag("SFX").GetComponent<AudioSource>().PlayOneShot(GameObject.FindWithTag("SFX").GetComponent<SFXManager>().landing);
+            return;
+        }
+        
 
         IsJumping = false;
         //playerAnimator.SetBool(IsJumpingHash, false);
@@ -219,10 +224,12 @@ public class PlayerController : MonoBehaviour
     {
         if (gameManager.IsPaused())
         {
+            GameObject.FindWithTag("SFX").GetComponent<AudioSource>().PlayOneShot(GameObject.FindWithTag("SFX").GetComponent<SFXManager>().unpause);
             gameManager.PauseGame(false);
         }
         else
         {
+            GameObject.FindWithTag("SFX").GetComponent<AudioSource>().PlayOneShot(GameObject.FindWithTag("SFX").GetComponent<SFXManager>().pause);
             gameManager.PauseGame(true);
         }
     }
@@ -236,6 +243,7 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.tag == "Checkpoint")
         {
+            GameObject.FindWithTag("SFX").GetComponent<AudioSource>().PlayOneShot(GameObject.FindWithTag("SFX").GetComponent<SFXManager>().checkpoints);
             gameManager.currentRespawnPoint = other.gameObject;
             other.gameObject.GetComponent<MeshRenderer>().material.color = Color.yellow;
         }
@@ -245,6 +253,8 @@ public class PlayerController : MonoBehaviour
 
             Cursor.lockState = CursorLockMode.Confined;
             Cursor.visible = true;
+
+            GameObject.FindWithTag("SFX").GetComponent<AudioSource>().PlayOneShot(GameObject.FindWithTag("SFX").GetComponent<SFXManager>().checkpoints);
 
             if (GameObject.FindWithTag("VictoryCheck") != null)
                 GameObject.FindWithTag("VictoryCheck").GetComponent<VictoryCheck>().Victory = true;
@@ -284,6 +294,8 @@ public class PlayerController : MonoBehaviour
             }
             transform.position = gameManager.currentRespawnPoint.transform.position;
             gameManager.SetLivesText(Lives);
+
+            GameObject.FindWithTag("SFX").GetComponent<AudioSource>().PlayOneShot(GameObject.FindWithTag("SFX").GetComponent<SFXManager>().takeDamage);
         } 
     }
 }
