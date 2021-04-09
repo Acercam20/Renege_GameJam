@@ -56,6 +56,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float timePowerLimit = 5;
     private float tempTime;
+    [SerializeField]
     private bool timeActive;
 
     //public AudioClip footsteps, running;
